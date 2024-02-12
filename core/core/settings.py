@@ -113,6 +113,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
+import os
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATIC_FILES_DIR = {
+    os.path.join(BASE_DIR, "public/static")
+}
+
+MEDIA_ROOT =  os.path.join(BASE_DIR, "public/static")
+MEDIA_URL = '/media/'
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
