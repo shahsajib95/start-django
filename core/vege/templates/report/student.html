@@ -1,0 +1,81 @@
+{% extends "base.html" %}{%block start%}
+
+<div class="container mt-5">
+  <div class="input-group my-3">
+    <form class="d-flex">
+      <input
+        type="text"
+        name="search"
+        class="form-control d-flex"
+        placeholder="search"
+        aria-label="search"
+        aria-describedby="basic-addon1"
+        value="{{search}}"
+      />
+      <button type="submit" class="btn btn-sm btn-success ms-2">Search</button>
+    </form>
+  </div>
+
+  <table class="table stripped">
+    {{context}}
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Student Id</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Student Email</th>
+        <th scope="col">Student Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students%}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>
+          <a href="{%url 'see-mark' student.student_id%}"
+            >{{student.student_id}}</a
+          >
+        </td>
+        <td>{{student.student_name}}</td>
+        <td>{{student.student_email}}</td>
+        <td>{{student.department}}</td>
+        <td>{{student.student_age}}</td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1">&laquo; first</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+          >previous</a
+        >
+      </li>
+      {% endif %}
+
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}"
+          >next</a
+        >
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"
+          >last &raquo;</a
+        >
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{%endblock%}
