@@ -1,0 +1,100 @@
+{% extends "base.html" %}{%block start%}
+
+<div class="container mt-5">
+  {{request.user}}
+  <form
+    class="col-6 mx-auto card p-3 shadow-lg"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <h2>Add Receipe</h2>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label"
+        >Receipe Name</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="exampleFormControlInput1"
+        placeholder=""
+        name="receipe_name"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label"
+        >Receipe Description</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="exampleFormControlInput1"
+        name="receipe_description"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label"
+        >Receipe Image</label
+      >
+      <input
+        type="file"
+        class="form-control"
+        id="exampleFormControlInput1"
+        name="receipe_image"
+      />
+    </div>
+    <button type="submit" class="btn btn-success">Add Receipe</button>
+  </form>
+
+  <hr />
+
+  <div class="input-group my-3">
+    <form>
+      <input
+        type="text"
+        name="search"
+        class="form-control"
+        placeholder="search receipe"
+        aria-label="search"
+        aria-describedby="basic-addon1"
+        value="{{search}}"
+      />
+      <button type="submit" class="btn btn-sm btn-success ms-2">Search</button>
+    </form>
+  </div>
+
+  <table class="table table-resposive">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Receipe Name</th>
+        <th scope="col">Receipe Description</th>
+        <th scope="col">Receipe Image</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for receipe in receipes%}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{receipe.receipe_name}}</td>
+        <td>{{receipe.receipe_description}}</td>
+        <td><img src="/media/{{receipe.receipe_image}}" class="w-25" /></td>
+        <td>
+          <a href="/delete-receipe/{{receipe.id}}"
+            ><button class="btn btn-sm btn-danger">Delete</button></a
+          >
+          <a href="/update-receipe/{{receipe.id}}"
+            ><button class="btn btn-sm btn-success ms-2">Update</button></a
+          >
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{%endblock%}
